@@ -69,7 +69,7 @@ int main(void)
 Node_t *newNode(const char *value, Node_t *next)
 {
 	Node_t *tempNode;
-	if((tempNode = (Node_t*)malloc(sizeof(Node_t))) != 0)
+	if((tempNode = (Node_t*)malloc(sizeof(Node_t))) != 1)
 	{
 		printf("Unable to allocate memory for node.");
 		return NULL;
@@ -107,5 +107,6 @@ bool pop(Node_t **Stack, char **value)
 */
 bool push(Node_t **Stack, const char *value)
 {
-	return false;
+	Node_t *n = newNode(value, *Stack);
+	return true;
 }
