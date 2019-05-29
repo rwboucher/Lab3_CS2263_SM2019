@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define BUFFER_SIZE 256
 
@@ -16,7 +17,7 @@ struct Node_t_t
 {
 	char *value;
 	struct Node_t_t *next;
-}
+};
 
 //  creat the shortform
 typedef struct Node_t_t Node_t;
@@ -33,6 +34,7 @@ int main(void)
 	// initialize our things
 	Node_t *Stack = NULL;
 	char buffer[BUFFER_SIZE] = { 0 };
+	char **retVal;
 	
 	// fill our stack from user input
 	while(1 == scanf("%s", buffer))
@@ -43,11 +45,11 @@ int main(void)
 	// write out the sentence in reverse order
 	while(Stack != NULL)
 	{
-		char *str = pop(&Stack);
+		bool str = pop(&Stack, retVal);
 		if(str)
 		{
-			printf("%s ", str);
-			free(str);
+			printf("%s ", *retVal);
+			free(retVal);
 		}
 	}
 	
@@ -66,7 +68,15 @@ int main(void)
 */
 Node_t *newNode(const char *value, Node_t *next)
 {
-	return NULL;
+	Node_t *tempNode;
+	if((tempNode = (Node_t*)malloc(sizeof(Node_t))) != 0)
+	{
+		printf("Unable to allocate memory for node.");
+		return NULL;
+	}
+	tempNode->value =strdup (value);
+	tempNode->next = (next);
+	return tempNode;	
 }
 
 /**
