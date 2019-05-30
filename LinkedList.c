@@ -34,7 +34,7 @@ int main(void)
 	// initialize our things
 	Node_t *Stack = NULL;
 	char buffer[BUFFER_SIZE] = { 0 };
-	char *retVal;
+	char *returnVal;
 	
 	// fill our stack from user input
 	while(1 == scanf("%s", buffer))
@@ -45,10 +45,10 @@ int main(void)
 	// write out the sentence in reverse order
 	while(Stack != NULL)
 	{
-		bool str = pop(&Stack, &retVal);
+		bool str = pop(&Stack, &returnVal);
 		if(str)
 		{
-			printf("%s ", retVal);
+			printf("%s ", returnVal);
 		}
 	}
 	
