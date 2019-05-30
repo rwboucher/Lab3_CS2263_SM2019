@@ -34,7 +34,7 @@ int main(void)
 	// initialize our things
 	Node_t *Stack = NULL;
 	char buffer[BUFFER_SIZE] = { 0 };
-	char **retVal;
+	char *retVal;
 	
 	// fill our stack from user input
 	while(1 == scanf("%s", buffer))
@@ -45,11 +45,10 @@ int main(void)
 	// write out the sentence in reverse order
 	while(Stack != NULL)
 	{
-		bool str = pop(&Stack, retVal);
+		bool str = pop(&Stack, &retVal);
 		if(str)
 		{
-			printf("%s ", *retVal);
-			free(retVal);
+			printf("%s ", retVal);
 		}
 	}
 	
@@ -68,14 +67,11 @@ int main(void)
 */
 Node_t *newNode(const char *value, Node_t *next)
 {
-	Node_t *tempNode;
-	if((tempNode = (Node_t*)malloc(sizeof(Node_t))) != 1)
-	{
-		printf("Unable to allocate memory for node.");
-		return NULL;
-	}
+	Node_t *tempNode = NULL;
+	if((tempNode = (Node_t*)malloc(sizeof(Node_t))) == NULL)
+		return tempNode;
 	tempNode->value =strdup (value);
-	tempNode->next = (next);
+	tempNode->next = next;
 	return tempNode;	
 }
 
@@ -86,7 +82,13 @@ Node_t *newNode(const char *value, Node_t *next)
 */
 Node_t *deleteNode(Node_t *current, char **value)
 {
-	return NULL;
+	if(current == NULL)
+		return NULL;
+	Node_t *p = current;
+	*value = p->value;
+	p = p -> next;
+	free (current);
+	return p;
 }
 
 /**
@@ -97,7 +99,8 @@ Node_t *deleteNode(Node_t *current, char **value)
 */
 bool pop(Node_t **Stack, char **value)
 {
-	return false;
+	*Stack = deleteNode(*Stack, value);
+	return true;
 }
 
 /**
@@ -107,6 +110,6 @@ bool pop(Node_t **Stack, char **value)
 */
 bool push(Node_t **Stack, const char *value)
 {
-	Node_t *n = newNode(value, *Stack);
+	*Stack = newNode(value, *Stack);
 	return true;
 }
